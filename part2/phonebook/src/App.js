@@ -72,7 +72,7 @@ const App = () => {
     event.preventDefault()
     if (window.confirm(`Delete ${event.target.name}?`)) {
       personService.deletePerson(event.target.id).then(() => {
-        setPersons(persons.filter(person => person.id !== parseInt(event.target.id)))
+        setPersons(persons.filter(person => person.id !== event.target.id))
         tempMessage(`${event.target.name} removed from phonebook`)
       })
       .catch(error => {
@@ -80,7 +80,7 @@ const App = () => {
       })
     }
   }
-
+  
   const handleNameChange = (event) => {
     event.preventDefault()
     setNewName(event.target.value)
