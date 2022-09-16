@@ -7,7 +7,7 @@ const Person = ({ person, deleteNumber }) => (
   )
 
 const Persons = ({ persons, search, deleteNumber }) => {
-  if (persons.length > 0) { 
+  if (persons.length > 0 && persons) { 
     return (
       <>
       {persons.filter(person => person.name.toLowerCase().includes(search.toLowerCase())).map(person => {

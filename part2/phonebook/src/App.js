@@ -28,16 +28,20 @@ const App = () => {
   const tempErrorMessage = (temp) => {
     setErrorMessage(temp)
     setTimeout(() => {
-      setMessage(null)
+      setErrorMessage(null)
     }, 5000)
   }
 
   const addPerson = (newPerson) => {
-    personService.addPerson(newPerson).then(returnedPerson => {
+    personService.addPerson(newPerson)
+    .then(returnedPerson => {
       setPersons(persons.concat(returnedPerson))
       setNewName('')
       setNewNumber('')
       tempMessage(`${returnedPerson.name} added to phonebook`)
+    })
+    .catch(e => {
+      tempErrorMessage(e.response.data.error)
     })
   }
 
@@ -49,8 +53,8 @@ const App = () => {
       number: newNumber
     }
     
-    if (persons.find(p => p.name.toLowerCase() === newName.toLowerCase())) {
-      const updatedPerson = persons.find(p => p.name.toLowerCase() === newName.toLowerCase())
+    if (persons.find(p => p.name === newName)) {
+      const updatedPerson = persons.find(p => p.name === newName)
       updatedPerson.number = newNumber
       if (window.confirm(`${newName} is already added to phonebook, update number?`)) {
         personService
@@ -60,7 +64,11 @@ const App = () => {
             tempMessage(`${returnedPerson.name} updated in phonebook`)
           })
           .catch(error => {
-            tempErrorMessage(`${updatedPerson.name} already deleted from phonebook`)
+            if (error.response) {
+              tempErrorMessage(error.response.data.error)
+            } else {
+              tempErrorMessage(`${updatedPerson.name} already deleted from phonebook`)
+            }
           })
       }
     } else {
