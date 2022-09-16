@@ -2,20 +2,28 @@
 
 # dependencies
 */*/node_modules
+*/node_modules
+
 /.pnp
 .pnp.js
 
 # testing
 /coverage
+/notes
 
 # production
 /build
+*/build
+*/*/build
 /*/*/public/
 /*/*/package-lock.json
 /*/*/README.md
 
 # misc
 .DS_Store
+.env
+.package-lock.json
+fly.toml
 .env.local
 .env.development.local
 .env.test.local
